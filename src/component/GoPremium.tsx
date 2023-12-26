@@ -26,6 +26,7 @@ import RNIap, {
 } from 'react-native-iap';
 
 import {itemSkus, restorePremium, savePremium} from '../utils/utils';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 let purchaseUpdate: EmitterSubscription, purchaseError: EmitterSubscription;
 
@@ -44,6 +45,7 @@ const GoPremium: FC<Props> = ({
   setIsPremium,
   isPremium,
 }) => {
+  console.log("🚀 ~ file: GoPremium.tsx:48 ~ isPremium:", isPremium)
   const [purchaseProcessing, setPurchaseProcessing] = useState(false);
   const [localizedPrice, setlocalizedPrice] = useState('');
 
@@ -236,7 +238,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   title: {
-    fontSize: 24,
+    fontSize: RFValue(24),
     textAlign: 'center',
     padding: 2,
   },
@@ -251,7 +253,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   featureTxt: {
-    fontSize: 20,
+    fontSize: RFValue(20),
     justifyContent: 'center',
     textAlign: 'center',
   },
@@ -272,7 +274,7 @@ const styles = StyleSheet.create({
     width: width,
   },
   buyBtnTxt: {
-    fontSize: 20,
+    fontSize: RFValue(20),
     textAlign: 'center',
     backgroundColor: darkYellow,
     padding: 8,
@@ -284,7 +286,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 5,
     color: '#0984e3',
-    fontSize: 16,
+    fontSize: RFValue(16),
   },
   loaderContainer: {
     backgroundColor: darkYellow,

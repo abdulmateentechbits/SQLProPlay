@@ -45,7 +45,7 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import GoPremium from './GoPremium';
-import {useInterstitialAd} from 'react-native-google-mobile-ads';
+import {AdEventType, InterstitialAd, TestIds, useInterstitialAd} from 'react-native-google-mobile-ads';
 import {DNS} from '@env';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
@@ -63,7 +63,7 @@ interface tableDataNode {
   rows: Array<Array<any>>;
 }
 
-const adConfig: any = {
+const adConfig = {
   showOnLoaded: true,
   loadOnMounted: false,
 };
@@ -79,43 +79,73 @@ const App: React.FC = () => {
   );
   const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
   const [isPremium, setIsPremium] = useState<boolean>(false);
-  const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
-  const {load, adLoaded} = useInterstitialAd(getInterstitialId(), adConfig);
-  const styles = useDynamicValue(dynamicStyles);
+  const adID = __DEV__ ? TestIds.INTERSTITIAL :  getInterstitialId();
 
+  const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
+  const { isLoaded, load, show } = useInterstitialAd(adID,{
+    keywords:["programming","database","networking"],
+    requestNonPersonalizedAdsOnly: true
+  });
+  const styles = useDynamicValue(dynamicStyles);
+   
+ 
+  useEffect(() => {
+    const init = async () => {
+      const isPremRes = await getIsPremium();
+     
+      setIsPremium(isPremRes);
+      // Setup ad only when user is not premium
+      if (!isPremRes) {
+        
+      }
+      await SplashScreen.hide({fade: true});
+    };
+    init();
+    // return () => {};
+  }, []);
+  
   const showAd = async () => {
     if (!shouldShowAd()) {
+      console.log("🚀 ~ file: App.tsx:109 ~ showAd ~ shouldShowAd:", shouldShowAd())
       return;
     }
-
-    if (adLoaded) {
+    
+    if (isLoaded) {
+      console.log("🚀 ~ file: App.tsx:113 ~ showAd ~ isLoaded:", isLoaded)
+      show();
       return;
     }
-    try {
+    try { 
       load();
     } catch (error) {
+      console.log("🚀 ~ file: App.tsx:114 ~ showAd ~ error:", error)
       console.log('failed to load ad', error);
     }
+  
   };
 
   const showToast = (message: string) => {
     ToastAndroid.show(message, ToastAndroid.SHORT);
   };
 
+
   const runQuery = async () => {
     if (!inputValue) {
       showToast('Empty query Please enter a query string');
       return;
     }
-
+    
     Keyboard.dismiss();
     setLoaderVisibility(true);
-    await insertUserCommand(inputValue); // store the command in db
+    await insertUserCommand(inputValue); 
     try {
       /** Show add if user is not premium */
+     
+      /** Show ad only if the user is not premium */
       if (!isPremium) {
         showAd();
       }
+      
       // execute the query
       const res: any = await ExecuteUserQuery(inputValue);
 
@@ -144,22 +174,11 @@ const App: React.FC = () => {
       setTableData({header: header, rows: rowsArr});
     } catch (error) {
       setLoaderVisibility(false);
-      Alert.alert('Error in DB', error?.message);
+      showToast(`Error while executing query ${error?.message}`)
     }
   };
 
-  useEffect(() => {
-    const init = async () => {
-      const isPremRes = await getIsPremium();
-      setIsPremium(isPremRes);
-      // Setup ad only when user is not premium
-      if (!isPremRes) {
-      }
-      await SplashScreen.hide({fade: true});
-    };
-    init();
-    // return () => {};
-  }, []);
+  
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>

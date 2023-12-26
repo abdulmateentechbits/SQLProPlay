@@ -10,6 +10,7 @@ import {
   ColorSchemeProvider,
 } from 'react-native-dynamic';
 import { colors } from '../themes/colors';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface Props {
   header: any[];
@@ -53,8 +54,9 @@ export default memo(DataTable);
 
 const dynamicStyles = new DynamicStyleSheet({
   outputText: {
-    fontSize: 19,
+    fontSize: RFValue(19),
     color: new DynamicValue('black', 'white'),
+    marginTop:10
   },
   tableBorder: {
     borderWidth: 2,
@@ -68,17 +70,17 @@ const dynamicStyles = new DynamicStyleSheet({
     margin: 6,
     textTransform: 'capitalize',
     color:"#FFFFFF",
-    fontSize:15
+    fontSize: RFValue(13)
   },
   rowTxt: {
     margin: 6,
     color: new DynamicValue('black', 'white'),
-    fontSize:14
+    fontSize: RFValue(13)
   },
   outPutContainer: {
     // flex: 1,
     // marginBottom: 235,
-    marginTop: 10,
+    marginTop: 20,
     width: '100%',
   },
 });

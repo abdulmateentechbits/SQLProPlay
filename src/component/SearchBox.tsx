@@ -22,6 +22,7 @@ import fil from '../utils/fil';
 import CommandList from './CommandList';
 import {CustomHandle, CustomBG, CustomBackdrop} from './CustomHandle';
 import {ids} from '../../e2e/ids';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface Props {
   setInputValue: (query: string) => void;
@@ -153,7 +154,7 @@ const dynamicStyles = new DynamicStyleSheet({
     flex: 1,
     paddingLeft: 5,
     paddingRight: 5,
-    fontSize: 16,
+    fontSize: RFValue(16),
     color: new DynamicValue('black', 'white'),
     // textAlign: 'center',
   },

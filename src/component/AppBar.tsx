@@ -3,6 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import MenuOptions from './MenuOptions';
 import SearchBox from './SearchBox';
 import { colors } from '../themes/colors';
+import { RFValue } from "react-native-responsive-fontsize";
 
 export interface Props {
   setInputValue: (query: string) => void;
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
   },
   appBarTxt: {
     textAlign: 'center',
-    fontSize: 22,
+    fontSize: RFValue(21),
     color: '#FFFFFF',
     marginLeft: 15,
   },

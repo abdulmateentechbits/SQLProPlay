@@ -27,6 +27,7 @@ import {
 
 import {BottomSheetFlatList, BottomSheetModal} from '@gorhom/bottom-sheet';
 import {ids} from '../../e2e/ids';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -93,7 +94,7 @@ const ListItem: FC<LIProps> = props => {
                 >
                   <SyntaxHighlighter
                     PreTag={View}
-                    fontSize={14}
+                    fontSize={RFValue(14)}
                     language="sql"
                     wrapLines={true}
                     style={isDark ? vs2015 : defaultStyle}
@@ -124,7 +125,7 @@ const ListItem: FC<LIProps> = props => {
                   {/*   disableScrollViewPanResponder */}
                   {/* > */}
                   <SyntaxHighlighter
-                    fontSize={14}
+                    fontSize={RFValue(14)}
                     language="sql"
                     wrapLines={true}
                     PreTag={View}
@@ -213,11 +214,11 @@ const dynamicStyles = new DynamicStyleSheet({
     top: -5,
   },
   title: {
-    fontSize: 18,
+    fontSize: RFValue(18),
     color: new DynamicValue('black', '#ffffffe7'),
   },
   description: {
-    fontSize: 16,
+    fontSize: RFValue(16),
     color: new DynamicValue('black', '#ffffffe7'),
   },
 

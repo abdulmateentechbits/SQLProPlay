@@ -29,6 +29,7 @@ import {lightDark, sideButton} from '../data/colors.json';
 import {findUserCommands, getLastUserCommand} from '../utils/storage';
 import {debounce} from '../utils/utils';
 import {ids} from '../../e2e/ids';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface Props {
   inputValue: string;
@@ -207,7 +208,7 @@ export default InputContainer;
 
 const dynamicStyles = new DynamicStyleSheet({
   inputHeader: {
-    fontSize: 16,
+    fontSize: RFValue(16),
     color: new DynamicValue('black', 'white'),
   },
   inputContainer: {
@@ -219,8 +220,8 @@ const dynamicStyles = new DynamicStyleSheet({
     backgroundColor: new DynamicValue('white', lightDark),
   },
   input: {
-    fontSize: 16,
-    fontFamily: codeFont,
+    fontSize: RFValue(16),
+    fontFamily: "SourceCodePro-Regular",
     padding: 5,
     // position: 'relative',
     zIndex: 2,
@@ -235,7 +236,7 @@ const dynamicStyles = new DynamicStyleSheet({
     position: 'absolute',
     zIndex: 1,
     fontFamily: codeFont,
-    fontSize: 16,
+    fontSize: RFValue(16),
     color: 'gray',
     top: 4.8,
     left: 4.8,

@@ -15,6 +15,7 @@ import {Menu, MenuItem, MenuDivider} from 'react-native-material-menu';
 
 import ExportData from './ExportData';
 import {colors} from '../themes/colors';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export interface Props {
   setInputValue: (query: string) => void;
@@ -54,12 +55,14 @@ There are no user roles or authentication here.
 
 All your queries are run for a single database, so all your tables are in a single database.
 
-In future, this app may allow you to create and select different databases.
+For now you will play with single database
       `,
       [{text: 'OK', style: 'cancel'}],
       {cancelable: true},
     );
   };
+
+  // In future, this app may allow you to create and select different databases.
 
   const sendMailFeedback = (): void => {
     try {
@@ -79,6 +82,7 @@ In future, this app may allow you to create and select different databases.
     }
   };
   const openPremiumModal = async () => {
+    console.log("Hello world!");
     setMenuOpen(false);
     setPremiumModalOpen(true);
   };
@@ -108,27 +112,27 @@ In future, this app may allow you to create and select different databases.
         }>
         <MenuItem
           disabled={!isPremium}
-          textStyle={{color: '#FFFFFF'}}
+          textStyle={{color: '#FFFFFF', fontSize:RFValue(14)}}
           onPress={() => {
             setMenuOpen(false);
             setExportModal(true);
           }}>
           Export Data
         </MenuItem>
-        <MenuItem textStyle={{color: '#FFFFFF'}} onPress={showAllTables}>
+        <MenuItem textStyle={{color: '#FFFFFF', fontSize:RFValue(14)}} onPress={showAllTables}>
           List all tables
         </MenuItem>
-        <MenuItem textStyle={{color: '#FFFFFF'}} onPress={showSupportedQuery}>
+        <MenuItem textStyle={{color: '#FFFFFF', fontSize:RFValue(14)}} onPress={showSupportedQuery}>
           Query Support
         </MenuItem>
-        <MenuItem textStyle={{color: '#FFFFFF'}} onPress={sendMailFeedback}>
+        <MenuItem textStyle={{color: '#FFFFFF', fontSize:RFValue(14)}} onPress={sendMailFeedback}>
           Send Feedback
         </MenuItem>
-        <MenuItem textStyle={{color: '#FFFFFF'}} onPress={openPrivacy}>
+        <MenuItem textStyle={{color: '#FFFFFF', fontSize:RFValue(14)}} onPress={openPrivacy}>
           Privacy Policy
         </MenuItem>
         <MenuDivider color="#FFFFFF" />
-        <MenuItem textStyle={{color: '#FFFFFF'}} onPress={openPremiumModal}>
+        <MenuItem textStyle={{color: '#FFFFFF', fontSize:RFValue(14)}} onPress={openPremiumModal}>
           <MCIcon name="crown" color="yellow" size={16} />
           <Text> {!isPremium && 'Go '}Premium</Text>
         </MenuItem>

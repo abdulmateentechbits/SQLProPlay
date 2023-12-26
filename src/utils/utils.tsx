@@ -56,23 +56,23 @@ export const debounce = (callback: any, delay = 250) => {
 };
 
 export const getInterstitialId = (): string => {
-  const testAdId = 'ca-app-pub-3940256099942544/8691691433';
-  return Platform.select({
-    ios: GAD_IOS,
-    android: GAD_ANDROID,
-    default: testAdId,
-  });
+  const testAdId = 'ca-app-pub-2626312197828834/7470733235';
+  return testAdId;
+  // return Platform.select({
+  //   ios: GAD_IOS,
+  //   android: GAD_ANDROID,
+  //   default: testAdId,
+  // });
 };
 
 // returns 75/50 true false
 export const shouldShowAd = (): boolean => {
   const rand: number = Math.floor(Math.random() * 5);
-  // console.log('rand', rand);
+  console.log('rand', rand);
   if (rand === 1) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 };
 
 export const savePremium = async (): Promise<void> => {
