@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import MenuOptions from './MenuOptions';
 import SearchBox from './SearchBox';
+import { colors } from '../themes/colors';
 
 export interface Props {
   setInputValue: (query: string) => void;
@@ -18,11 +19,11 @@ const AppBar: React.FC<Props> = ({
   setPremiumModalOpen,
   premiumModalOpen,
 }) => {
-  // console.log(premiumModalOpen);
+
   return (
     <View style={styles.appBar} accessibilityLabel="app bar">
       <Text style={styles.appBarTxt} accessibilityLabel="SQL Play">
-        SQL Play
+        SQL play ground
       </Text>
       <View style={styles.optionContainer}>
         <SearchBox setInputValue={setInputValue} />
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   appBar: {
     width: '100%',
     height: 45,
-    backgroundColor: '#ffea00',
+    backgroundColor: colors.secondary,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
   appBarTxt: {
     textAlign: 'center',
     fontSize: 22,
-    color: '#2f3542',
+    color: '#FFFFFF',
     marginLeft: 15,
   },
   optionContainer: {

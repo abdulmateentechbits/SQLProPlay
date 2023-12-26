@@ -1,11 +1,20 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {View, Text, Alert, Linking, Keyboard} from 'react-native';
+import {
+  View,
+  Text,
+  Alert,
+  Linking,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Menu, MenuItem, MenuDivider} from 'react-native-material-menu';
 
 import ExportData from './ExportData';
+import {colors} from '../themes/colors';
 
 export interface Props {
   setInputValue: (query: string) => void;
@@ -80,36 +89,47 @@ In future, this app may allow you to create and select different databases.
         visible={menuOpen}
         animationDuration={menuOpen ? 300 : 0}
         onRequestClose={() => setMenuOpen(false)}
-        style={{maxWidth: 'auto'}}
+        style={{maxWidth: 'auto', backgroundColor: colors.primary}}
         anchor={
-          <Icon
-            accessibilityLabel="Menu Options"
-            accessibilityHint="Shows additional options like export, list table & premium"
-            name="more-vert"
+          <TouchableWithoutFeedback
+            hitSlop={15}
             onPress={() => {
               setMenuOpen(true);
               Keyboard.dismiss();
-            }}
-            size={25}
-          />
-        }
-      >
+            }}>
+            <Icon
+              accessibilityLabel="Menu Options"
+              accessibilityHint="Shows additional options like export, list table & premium"
+              name="more-vert"
+              color="#FFFFFF"
+              size={25}
+            />
+          </TouchableWithoutFeedback>
+        }>
         <MenuItem
           disabled={!isPremium}
+          textStyle={{color: '#FFFFFF'}}
           onPress={() => {
             setMenuOpen(false);
             setExportModal(true);
-          }}
-        >
+          }}>
           Export Data
         </MenuItem>
-        <MenuItem onPress={showAllTables}>List all tables</MenuItem>
-        <MenuItem onPress={showSupportedQuery}>Query Support</MenuItem>
-        <MenuItem onPress={sendMailFeedback}>Send Feedback</MenuItem>
-        <MenuItem onPress={openPrivacy}>Privacy Policy</MenuItem>
-        <MenuDivider />
-        <MenuItem onPress={openPremiumModal}>
-          <MCIcon name="crown" size={16} />
+        <MenuItem textStyle={{color: '#FFFFFF'}} onPress={showAllTables}>
+          List all tables
+        </MenuItem>
+        <MenuItem textStyle={{color: '#FFFFFF'}} onPress={showSupportedQuery}>
+          Query Support
+        </MenuItem>
+        <MenuItem textStyle={{color: '#FFFFFF'}} onPress={sendMailFeedback}>
+          Send Feedback
+        </MenuItem>
+        <MenuItem textStyle={{color: '#FFFFFF'}} onPress={openPrivacy}>
+          Privacy Policy
+        </MenuItem>
+        <MenuDivider color="#FFFFFF" />
+        <MenuItem textStyle={{color: '#FFFFFF'}} onPress={openPremiumModal}>
+          <MCIcon name="crown" color="yellow" size={16} />
           <Text> {!isPremium && 'Go '}Premium</Text>
         </MenuItem>
       </Menu>

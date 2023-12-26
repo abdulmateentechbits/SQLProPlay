@@ -147,16 +147,14 @@ const InputContainer: FC<Props> = ({
   const styles = useDynamicValue(dynamicStyles);
   return (
     <View>
-      <Text style={styles.inputHeader}>Type your SQL Query</Text>
+      <Text style={styles.inputHeader}>Write your SQL Query here</Text>
       <View style={styles.inputContainer}>
         <FlingGestureHandler
           direction={Directions.RIGHT}
-          onHandlerStateChange={handleSwipeRight}
-        >
+          onHandlerStateChange={handleSwipeRight}>
           <FlingGestureHandler
             direction={Directions.LEFT}
-            onHandlerStateChange={handleSwipeLeft}
-          >
+            onHandlerStateChange={handleSwipeLeft}>
             <TextInput
               style={styles.input}
               autoFocus={true}
@@ -176,8 +174,7 @@ const InputContainer: FC<Props> = ({
         <Text
           suppressHighlighting={true}
           onLongPress={setAutoInput}
-          style={styles.autoCompleteTxt}
-        >
+          style={styles.autoCompleteTxt}>
           {autoCompleteTxt}
         </Text>
       </View>
@@ -185,23 +182,20 @@ const InputContainer: FC<Props> = ({
         <TouchableOpacity
           accessibilityLabel="Up Button"
           accessibilityHint="gets the previous command from history"
-          onPress={onUpArrowPress}
-        >
+          onPress={onUpArrowPress}>
           <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.downArrow}
           accessibilityLabel="Down Button"
           accessibilityHint="gets the next command from history"
-          onPress={onDownArrowPress}
-        >
+          onPress={onDownArrowPress}>
           <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={clearInput}
           accessibilityLabel="Clear command button"
-          accessibilityHint="clear the command input"
-        >
+          accessibilityHint="clear the command input">
           <Icon size={30} name="text-box-remove" color={sideButton} />
         </TouchableOpacity>
       </View>

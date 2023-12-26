@@ -73,7 +73,7 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
         testID={ids.searchBtn}
         onPress={openTabSheet}
       >
-        <Icon name="search" size={25} />
+        <Icon name="search" color="#FFFFFF" size={25} />
       </TouchableOpacity>
 
       <BottomSheetModal

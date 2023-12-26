@@ -8,7 +8,9 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
   StatusBar,
+  ToastAndroid,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 import {
   DynamicStyleSheet,
@@ -47,7 +49,7 @@ import {useInterstitialAd} from 'react-native-google-mobile-ads';
 import {DNS} from '@env';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
-
+import {colors} from '../themes/colors';
 // Sentry.init({
 //   dsn: DNS,
 //   debug: __DEV__,
@@ -96,29 +98,13 @@ const App: React.FC = () => {
     }
   };
 
-  const showAlert = () =>
-    Alert.alert(
-      'Empty query string',
-      'Please enter a query string',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => Alert.alert('Cancel Pressed'),
-          style: 'cancel',
-        },
-      ],
-      {
-        cancelable: true,
-        onDismiss: () =>
-          Alert.alert(
-            'This alert was dismissed by tapping outside of the alert dialog.',
-          ),
-      },
-    );
+  const showToast = (message: string) => {
+    ToastAndroid.show(message, ToastAndroid.SHORT);
+  };
 
   const runQuery = async () => {
     if (!inputValue) {
-      showAlert();
+      showToast('Empty query Please enter a query string');
       return;
     }
 
@@ -182,7 +168,7 @@ const App: React.FC = () => {
           <SafeAreaProvider>
             <StatusBar
               barStyle="dark-content"
-              backgroundColor="#c8b900"
+              backgroundColor={colors.secondary}
               translucent
             />
             <GoPremium
@@ -202,7 +188,7 @@ const App: React.FC = () => {
 
               <Modal visible={loaderVisibility} transparent={true}>
                 <View style={styles.modalStyle}>
-                  <ActivityIndicator size={50} color="gold" />
+                  <ActivityIndicator size={50} color="#FFFFFF" />
                 </View>
               </Modal>
               <View testID="query-runner" style={styles.outerContainer}>

@@ -8,11 +8,13 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ids} from '../../e2e/ids';
+import { colors } from '../themes/colors';
 
 interface Props {
   runQuery: (event: GestureResponderEvent) => void;
 }
 const RunButton: FC<Props> = ({runQuery}) => {
+  
   return (
     <TouchableOpacity
       testID={ids.runBtn}
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
     padding: 10,
     // width: 50,
     // height: 50,
-    backgroundColor: '#2ecc71',
+    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 250,

@@ -9,6 +9,7 @@ import {
   useDynamicValue,
   ColorSchemeProvider,
 } from 'react-native-dynamic';
+import { colors } from '../themes/colors';
 
 interface Props {
   header: any[];
@@ -20,14 +21,13 @@ const DataTable: FC<Props> = ({header, rows, tableWidths}) => {
   const styles = useDynamicValue(dynamicStyles);
   return (
     <>
-      <Text style={styles.outputText}>Output</Text>
+      <Text style={styles.outputText}>Result</Text>
 
       <ScrollView
         testID="table"
         accessibilityLabel="output table"
         horizontal={true}
-        bounces={false}
-      >
+        bounces={false}>
         <View style={styles.outPutContainer}>
           <ScrollView bounces={false}>
             <Table borderStyle={styles.tableBorder}>
@@ -53,23 +53,27 @@ export default memo(DataTable);
 
 const dynamicStyles = new DynamicStyleSheet({
   outputText: {
+    fontSize: 19,
     color: new DynamicValue('black', 'white'),
   },
   tableBorder: {
     borderWidth: 2,
-    borderColor: '#fdd835',
+    borderColor: '#696969',
   },
   head: {
     height: 40,
-    backgroundColor: '#ffea00',
+    backgroundColor: colors.secondary,
   },
   headerText: {
     margin: 6,
     textTransform: 'capitalize',
+    color:"#FFFFFF",
+    fontSize:15
   },
   rowTxt: {
     margin: 6,
     color: new DynamicValue('black', 'white'),
+    fontSize:14
   },
   outPutContainer: {
     // flex: 1,

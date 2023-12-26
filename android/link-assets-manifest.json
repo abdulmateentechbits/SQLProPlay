@@ -1,0 +1,69 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/SourceCodePro-Black.ttf",
+      "sha1": "88eaa42a9472707ba05ad15ae4d7cc7bd710f316"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-BlackItalic.ttf",
+      "sha1": "c1d6be2a5c7c8073b8da8666cee458820ce21408"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-Bold.ttf",
+      "sha1": "ed0589516a532780eeb4cf519752450fc027ea93"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-BoldItalic.ttf",
+      "sha1": "57302fed47f05cc0dc7192d846ee2157481594ae"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-ExtraBold.ttf",
+      "sha1": "5282974b4d9a25d50d3d20c679eaa612cca24d9f"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-ExtraBoldItalic.ttf",
+      "sha1": "f2d32d7865360d9f2de8added304030c691751f3"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-ExtraLight.ttf",
+      "sha1": "67fc696ea800e4694ae7cccb862c8ea0586f854a"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-ExtraLightItalic.ttf",
+      "sha1": "1f776f299893732f5b50543293a150118162e45f"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-Italic.ttf",
+      "sha1": "a1411a2abac309ab3860e0a30e3ca447e998f576"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-Light.ttf",
+      "sha1": "dc9e937ebc3622b03c2b5a3d3cc69459c4d30429"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-LightItalic.ttf",
+      "sha1": "7425751284e070815a692481fe404a42c4c4aa10"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-Medium.ttf",
+      "sha1": "e32d322527a753152134024c08fbeff53b57d75b"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-MediumItalic.ttf",
+      "sha1": "a126a3edd817be821a4b737965672199884f05ad"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-Regular.ttf",
+      "sha1": "e853c09f3bf0fcdf2a1ecda49010b6ce024c8649"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-SemiBold.ttf",
+      "sha1": "03f66791a525f2eab3e9067581eb6dc4219fe6bc"
+    },
+    {
+      "path": "assets/fonts/SourceCodePro-SemiBoldItalic.ttf",
+      "sha1": "88f6d580981c02bda98b10c312ec65003721ebf7"
+    }
+  ]
+}
