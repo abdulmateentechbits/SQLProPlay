@@ -116,7 +116,7 @@ const GoPremium: FC<Props> = ({
       await RNIap.requestPurchase(itemSkus[0]);
       console.log('Purchase success');
     } catch (err) {
-      console.log(err.code, err.message);
+      console.log(err?.code, err?.message);
     }
   };
 
@@ -146,8 +146,7 @@ const GoPremium: FC<Props> = ({
       visible={modalState}
       animationType="slide"
       presentationStyle="fullScreen"
-      onRequestClose={() => setModalState(false)}
-    >
+      onRequestClose={() => setModalState(false)}>
       <ScrollView contentContainerStyle={{height: height}}>
         <SafeAreaView style={styles.container}>
           <View>
@@ -199,8 +198,7 @@ const GoPremium: FC<Props> = ({
             <TouchableOpacity
               style={styles.buyBtn}
               onPress={buyPremium}
-              disabled={isPremium}
-            >
+              disabled={isPremium}>
               {!purchaseProcessing ? (
                 <Text style={styles.buyBtnTxt}>
                   {isPremium

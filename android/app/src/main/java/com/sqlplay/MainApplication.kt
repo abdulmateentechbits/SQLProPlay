@@ -1,4 +1,4 @@
-package com.sql_playground
+package com.sql_lite
 
 import android.app.Application
 import com.facebook.react.PackageList
@@ -11,7 +11,7 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.flipper.ReactNativeFlipper
 import com.facebook.soloader.SoLoader
-import com.github.amarcruz.rntextsize.RNTextSizePackage;
+//import com.github.amarcruz.rntextsize.RNTextSizePackage;
 
 class MainApplication : Application(), ReactApplication {
 
@@ -20,7 +20,7 @@ class MainApplication : Application(), ReactApplication {
         override fun getPackages(): List<ReactPackage> {
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
-          packages.add(new RNTextSizePackage());
+          //packages.add(new RNTextSizePackage());
 
           return PackageList(this).packages
         }

@@ -8,7 +8,6 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
   StatusBar,
-  LogBox,
 } from 'react-native';
 
 import {
@@ -49,10 +48,10 @@ import {DNS} from '@env';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
 
-Sentry.init({
-  dsn: DNS,
-  debug: __DEV__,
-});
+// Sentry.init({
+//   dsn: DNS,
+//   debug: __DEV__,
+// });
 
 MCIcon.loadFont();
 MIcon.loadFont();
@@ -97,7 +96,32 @@ const App: React.FC = () => {
     }
   };
 
+  const showAlert = () =>
+    Alert.alert(
+      'Empty query string',
+      'Please enter a query string',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => Alert.alert('Cancel Pressed'),
+          style: 'cancel',
+        },
+      ],
+      {
+        cancelable: true,
+        onDismiss: () =>
+          Alert.alert(
+            'This alert was dismissed by tapping outside of the alert dialog.',
+          ),
+      },
+    );
+
   const runQuery = async () => {
+    if (!inputValue) {
+      showAlert();
+      return;
+    }
+
     Keyboard.dismiss();
     setLoaderVisibility(true);
     await insertUserCommand(inputValue); // store the command in db

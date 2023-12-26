@@ -74,9 +74,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.sql_playground"
+    namespace "com.sql_lite"
     defaultConfig {
-        applicationId "com.sql_playground"
+        applicationId "com.sql_lite"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -111,7 +111,8 @@ dependencies {
     implementation("com.facebook.react:flipper-integration")
     implementation project(':react-native-iap')
     implementation project(':react-native-text-size');
-    implementation project(':react-native-vector-icons')
+    implementation project(':react-native-vector-icons');
+    
     
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
