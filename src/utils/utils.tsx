@@ -1,5 +1,6 @@
 import {Platform} from 'react-native';
-import rnTextSize from 'react-native-text-size';
+// import rnTextSize from 'react-native-text-size';
+import rnTextSize from 'react-native-text-size-latest';
 import SInfo from 'react-native-sensitive-info';
 import RNIap, {ProductPurchase, Subscription} from 'react-native-iap';
 import {GAD_IOS, GAD_ANDROID} from '@env';

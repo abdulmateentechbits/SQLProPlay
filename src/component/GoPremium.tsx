@@ -181,7 +181,7 @@ const GoPremium: FC<Props> = ({
             <View style={styles.header}>
               <Image
                 style={styles.logo}
-                accessibilityLabel="SQL Play premium logo"
+                accessibilityLabel="SQL Compiler premium logo"
                 source={require('../images/sqlpro.png')}
               />
               <Text style={styles.title}>

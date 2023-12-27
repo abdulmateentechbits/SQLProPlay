@@ -1,4 +1,4 @@
-package com.sql_lite
+package com.sql_compiler
 
 import android.app.Application
 import com.facebook.react.PackageList

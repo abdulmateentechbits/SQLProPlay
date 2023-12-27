@@ -22,10 +22,11 @@ import os
 # Default app bundle ID: com.myreserp.paragon.fm.app (play store paragon bundle id do not change this)
 
 # Existing bundle ID to be replaced
-original_bundle_id = "com.sql_playground"
+original_bundle_id = "com.sqlplayground"
 
 # Desired bundle ID to generate APK for
-new_bundle_id = "com.sql_lite"
+new_bundle_id = "com.sql_compiler"
+
 
 # -----------------------------------------------
 

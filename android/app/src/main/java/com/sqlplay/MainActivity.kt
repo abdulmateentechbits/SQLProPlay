@@ -1,4 +1,4 @@
-package com.sql_lite
+package com.sql_compiler
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

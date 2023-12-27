@@ -74,9 +74,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.sql_lite"
+    namespace "com.sql_compiler"
     defaultConfig {
-        applicationId "com.sql_lite"
+        applicationId "com.sql_compiler"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -110,7 +110,7 @@ dependencies {
     implementation("com.facebook.react:react-android")
     implementation("com.facebook.react:flipper-integration")
     implementation project(':react-native-iap')
-    implementation project(':react-native-text-size');
+    implementation project(':react-native-text-size-latest');
     implementation project(':react-native-vector-icons');
     implementation ('com.google.android.gms:play-services-ads:22.6.0')
     

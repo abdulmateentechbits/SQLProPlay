@@ -67,7 +67,7 @@ For now you will play with single database
   const sendMailFeedback = (): void => {
     try {
       Linking.openURL(
-        'mailto:hi@creativeshi.com?subject=SQL%20Playground%20Feedback',
+        'mailto:mateenchitralidev@gmail.com?subject=SQL%20Playground%20Feedback',
       );
     } catch (e) {
       console.error(e);
@@ -76,7 +76,7 @@ For now you will play with single database
 
   const openPrivacy = (): void => {
     try {
-      Linking.openURL('https://sqlplay.net/privacy');
+      Linking.openURL('https://www.termsfeed.com/live/44e09b07-c44e-44aa-aab8-1549b2cc88ec');
     } catch (e) {
       console.error(e);
     }

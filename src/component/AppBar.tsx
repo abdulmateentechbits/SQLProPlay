@@ -24,7 +24,7 @@ const AppBar: React.FC<Props> = ({
   return (
     <View style={styles.appBar} accessibilityLabel="app bar">
       <Text style={styles.appBarTxt} accessibilityLabel="SQL Play">
-        SQL play ground
+        SQL Compiler
       </Text>
       <View style={styles.optionContainer}>
         <SearchBox setInputValue={setInputValue} />

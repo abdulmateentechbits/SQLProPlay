@@ -6710,10 +6710,10 @@ react-native-table-component@^1.2.2:
   resolved "https://registry.npmjs.org/react-native-table-component/-/react-native-table-component-1.2.2.tgz#1c9bdcd8f1fd7edf10d1e93ebc3b7877ecd74def"
   integrity sha512-7bbsi5431iWcjj3toASh8lFHGi6AG/+MTd4M7GuksXKxx/CFs/Qwv1Ys7D2wgyuYKe3hxWNfSVrteFj0tOYXYw==
 
-react-native-text-size@^4.0.0-rc.1:
-  version "4.0.0-rc.1"
-  resolved "https://registry.npmjs.org/react-native-text-size/-/react-native-text-size-4.0.0-rc.1.tgz#1e048d345dd6a5a8e1269e0585c1a5948c478da5"
-  integrity sha512-CysqjU2jK6Yc+a+kEI222pUyTY2ywcU2HqbFqf1KHymW6OPTdvBBHqbEJKL0QiLhQaFYDbqicM+h990s9TP00g==
+react-native-text-size-latest@^4.0.0-rc.5:
+  version "4.0.0-rc.5"
+  resolved "https://registry.npmjs.org/react-native-text-size-latest/-/react-native-text-size-latest-4.0.0-rc.5.tgz#df9a94da963062962cb14ffd11832446de7b6c62"
+  integrity sha512-8ZHgk+MhQ2pjaQdbpsN5Oqml9ErSgebmlMqyOtNRnDSRGG2X3PsSkXSXnNz+v1lwwmxzshR8HFNUSBtQO3R10Q==
 
 react-native-toast-message@^2.2.0:
   version "2.2.0"
