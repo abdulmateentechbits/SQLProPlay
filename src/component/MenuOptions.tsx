@@ -7,6 +7,7 @@ import {
   Linking,
   Keyboard,
   TouchableWithoutFeedback,
+  ToastAndroid,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -82,10 +83,23 @@ For now you will play with single database
     }
   };
   const openPremiumModal = async () => {
-    console.log("Hello world!");
+  
     setMenuOpen(false);
     setPremiumModalOpen(true);
   };
+  const showToast = (message: string) => {
+    ToastAndroid.show(message, ToastAndroid.SHORT);
+  };
+  const rateStar = () => {
+    // https://play.google.com/store/apps/details?id=com.sql_compiler
+    try {
+      Linking.openURL('https://play.google.com/store/apps/details?id=com.sql_compiler');
+    } catch (error) {
+      console.log("🚀 ~ file: MenuOptions.tsx:98 ~ rateStar ~ error:", error)
+      
+    }
+  };
+  
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <ExportData modalState={exportModal} setModalState={setExportModal} />
@@ -111,9 +125,13 @@ For now you will play with single database
           </TouchableWithoutFeedback>
         }>
         <MenuItem
-          disabled={!isPremium}
+          // disabled={!isPremium}
           textStyle={{color: '#FFFFFF', fontSize:RFValue(14)}}
           onPress={() => {
+            if(!isPremium){
+              showToast("Available on premium version");
+              return true;
+            }
             setMenuOpen(false);
             setExportModal(true);
           }}>
@@ -130,6 +148,9 @@ For now you will play with single database
         </MenuItem>
         <MenuItem textStyle={{color: '#FFFFFF', fontSize:RFValue(14)}} onPress={openPrivacy}>
           Privacy Policy
+        </MenuItem>
+        <MenuItem textStyle={{color: '#FFFFFF', fontSize:RFValue(14)}} onPress={rateStar}>
+          Rate us 5 🌟
         </MenuItem>
         <MenuDivider color="#FFFFFF" />
         <MenuItem textStyle={{color: '#FFFFFF', fontSize:RFValue(14)}} onPress={openPremiumModal}>

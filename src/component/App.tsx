@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useLayoutEffect} from 'react';
 import {
   View,
   Alert,
@@ -35,8 +35,8 @@ import Table from './Table';
 import RunButton from './RunButton';
 import InputContainer from './InputContainer';
 
-import '../utils/appReviewer';
-import '../utils/updateChecker';
+// import '../utils/appReviewer';
+// import '../utils/updateChecker';
 import {darkBGColor} from '../data/colors.json';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -48,8 +48,11 @@ import GoPremium from './GoPremium';
 import {AdEventType, InterstitialAd, TestIds, useInterstitialAd} from 'react-native-google-mobile-ads';
 import {DNS} from '@env';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import VersionCheck from 'react-native-version-check';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
 import {colors} from '../themes/colors';
+import DeviceInfo from 'react-native-device-info';
+import { UpdateAppModal } from './UpdateAppModal';
 // Sentry.init({
 //   dsn: DNS,
 //   debug: __DEV__,
@@ -77,32 +80,51 @@ const App: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>(
     'SELECT * FROM employees',
   );
+  const [isUpdateModalVisible, setUpdateModalVisible] = useState<boolean>(false);
+  const [appUrl, setAppUrl] = useState('');
   const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
   const [isPremium, setIsPremium] = useState<boolean>(false);
   const adID = __DEV__ ? TestIds.INTERSTITIAL :  getInterstitialId();
-
+  
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
   const { isLoaded, load, show } = useInterstitialAd(adID,{
     keywords:["programming","database","networking"],
     requestNonPersonalizedAdsOnly: true
   });
   const styles = useDynamicValue(dynamicStyles);
-   
- 
-  useEffect(() => {
-    const init = async () => {
-      const isPremRes = await getIsPremium();
-     
-      setIsPremium(isPremRes);
-      // Setup ad only when user is not premium
-      if (!isPremRes) {
-        
-      }
-      await SplashScreen.hide({fade: true});
-    };
-    init();
-    // return () => {};
-  }, []);
+
+  // check for update application version
+  // useEffect(() => {
+    //   const id = DeviceInfo.getBundleId();
+  //   if (id === "com.sql_compiler") {
+    //     VersionCheck.needUpdate()
+    //       .then(async (res: { isNeeded: any; storeUrl: React.SetStateAction<string>; }) => {
+      //         // console.log("res", res)
+  //         if (res.isNeeded) {
+  //           setUpdateModalVisible(true);
+  //           setAppUrl(res.storeUrl);
+  //         }
+  //       });
+  //   }
+  
+  // }, []);
+  
+  
+  
+  useLayoutEffect(()=>{
+  const init = async () => {
+    const isPremRes = await getIsPremium();
+    
+    setIsPremium(isPremRes);
+    // Setup ad only when user is not premium
+    if (!isPremRes) {
+      
+    }
+    await SplashScreen.hide({fade: true});
+  };
+  init();
+  // return () => {};
+ },[])
   
   const showAd = async () => {
     
@@ -122,14 +144,14 @@ const App: React.FC = () => {
       console.log("🚀 ~ file: App.tsx:114 ~ showAd ~ error:", error)
       console.log('failed to load ad', error);
     }
-  
+    
   };
-
+  
   const showToast = (message: string) => {
     ToastAndroid.show(message, ToastAndroid.SHORT);
   };
-
-
+  
+  
   const runQuery = async () => {
     if (!inputValue) {
       showToast('Empty query Please enter a query string');
@@ -150,18 +172,18 @@ const App: React.FC = () => {
       
       // execute the query
       const res: any = await ExecuteUserQuery(inputValue);
-
+      
       const len: number = res.rows.length;
 
       // console.log(res.rows);
       if (len === 0) {
         setLoaderVisibility(false);
-        Snackbar.show({text: 'Query Executed!'});
+        showToast('Query Executed Successfully!');
         return;
       }
       const header: string[] = Object.keys(res.rows.item(0)).reverse();
       const rowsArr: any[] = [];
-
+      
       for (let i = 0; i < len; i++) {
         let row = res.rows.item(i);
         rowsArr.push(Object.values(row).reverse());
@@ -169,7 +191,7 @@ const App: React.FC = () => {
       // pass the header and result arr to get the largest widths of their respective column
       tableWidths.current = await getLargestWidths([header, ...rowsArr]);
       // console.log(([header, ...rowsArr]));
-
+      
       setLoaderVisibility(false);
       // console.log(rowsArr);
 
@@ -179,6 +201,10 @@ const App: React.FC = () => {
       showToast(`Error while executing query ${error?.message}`)
     }
   };
+  const handleModalVisibility = (toggle: boolean) => {
+    setUpdateModalVisible(toggle)
+  }
+
 
   
 
@@ -191,13 +217,13 @@ const App: React.FC = () => {
               barStyle="dark-content"
               backgroundColor={colors.secondary}
               translucent
-            />
+              />
             <GoPremium
               modalState={premiumModalOpen}
               setModalState={setPremiumModalOpen}
               isPremium={isPremium}
               setIsPremium={setIsPremium}
-            />
+              />
             <KeyboardAvoidingView
               style={{flex: 1}}
               {...(Platform.OS === 'ios' && {behavior: 'padding'})}
@@ -234,6 +260,8 @@ const App: React.FC = () => {
 
                 <RunButton runQuery={runQuery} />
               </View>
+              <UpdateAppModal isVisible={isUpdateModalVisible} onCloseModal={handleModalVisibility} appUrl={appUrl} />
+
             </KeyboardAvoidingView>
           </SafeAreaProvider>
         </BottomSheetModalProvider>

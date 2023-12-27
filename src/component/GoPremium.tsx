@@ -33,6 +33,7 @@ import RNIap, {
 import {itemSkus, restorePremium, savePremium} from '../utils/utils';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { colors } from '../themes/colors';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 let purchaseUpdate: EmitterSubscription, purchaseError: EmitterSubscription;
 
@@ -51,52 +52,61 @@ const GoPremium: FC<Props> = ({
   setIsPremium,
   isPremium,
 }) => {
+  console.log("🚀 ~ file: GoPremium.tsx:55 ~ isPremium:", isPremium)
+ 
   const [purchaseProcessing, setPurchaseProcessing] = useState(false);
   const [localizedPrice, setlocalizedPrice] = useState('');
-  console.log("🚀 ~ file: GoPremium.tsx:53 ~ localizedPrice:", localizedPrice)
+  const { type, isConnected } = useNetInfo();
+
 
   const getItems = async (): Promise<void> => {
     try {
       const result: boolean = await initConnection();
-      console.log("🚀 ~ file: GoPremium.tsx:56 ~ getItems ~ result:", result)
+      console.log("🚀 ~ file: GoPremium.tsx:64 ~ getItems ~ result:", result)
       /** If there is no skus return here */
       if (!itemSkus) {
         return;
       }
       const products: Product[] = await getProducts({skus:itemSkus});
-      console.log("🚀 ~ file: GoPremium.tsx:60 ~ getItems ~ products:", products)
-      setlocalizedPrice(products[0]?.localizedPrice || "200");
+     
+       if(Array.isArray(products) && products.length > 0) {
+        setlocalizedPrice(products[0]?.localizedPrice);
 
-      purchaseUpdate = purchaseUpdatedListener(async purchase => {
-        const receipt: string = purchase.transactionReceipt;
-        if (receipt) {
-          try {
-            await finishTransaction({purchase:purchase,isConsumable:false});
-            Alert.alert(
-              'Purchase complete',
-              'Thanks for purchasing, Now you can enjoy the premium benefits ',
-            );
-            /** make it affect on all app  */
-            savePremium();
-            setIsPremium(true);
-            setPurchaseProcessing(false);
-          } catch (ackErr) {
-            showToast(`Error while purchasing: ${ackErr?.message}`)
-            console.log('ackErr', ackErr);
+        purchaseUpdate = purchaseUpdatedListener(async purchase => {
+          const receipt: string = purchase.transactionReceipt;
+          if (receipt) {
+            try {
+             const transactionResult =  await finishTransaction({purchase:purchase,isConsumable:false});
+              console.log("🚀 ~ file: GoPremium.tsx:76 ~ getItems ~ transactionResult:", transactionResult)
+              Alert.alert(
+                'Purchase complete',
+                'Thanks for purchasing, Now you can enjoy the premium benefits ',
+              );
+              /** make it affect on all app  */
+              
+              savePremium();
+              setIsPremium(true);
+              setPurchaseProcessing(false);
+            } catch (ackErr) {
+              setIsPremium(false);
+              showToast(`Error while purchasing: ${ackErr?.message}`)
+              console.log('ackErr', ackErr);
+            }
           }
-        }
-      });
-
-      purchaseError = purchaseErrorListener(error => {
-        // console.log('purchaseErrorListener', error);
-        setPurchaseProcessing(false);
-        // Alert.alert('purchase error', JSON.stringify(error.message));
-      });
+        });
+  
+        purchaseError = purchaseErrorListener(error => {
+          // console.log('purchaseErrorListener', error);
+          setPurchaseProcessing(false);
+          // Alert.alert('purchase error', JSON.stringify(error.message));
+        });
+       }
       // const consumed = await RNIap.consumeAllItemsAndroid();
       // console.log('consumed all items?', consumed);
     } catch (err) {
       showToast(`Error: ${err?.message}`)
       console.log(err);
+      setIsPremium(false);
       setPurchaseProcessing(false);
     }
   };
@@ -116,10 +126,11 @@ const GoPremium: FC<Props> = ({
       };
     };
 
-    setIsPremium(true);
+    // setIsPremium(true);
   }, []);
 
   const buyPremium = async (): Promise<void> => {
+    if(!isConnected) return showToast('Network is not connected');
     console.log("🚀 ~ file: GoPremium.tsx:115 ~ buyPremium ~ itemSkus:", itemSkus)
     
     if (!itemSkus) {
