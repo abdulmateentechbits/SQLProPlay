@@ -105,6 +105,7 @@ const App: React.FC = () => {
   }, []);
   
   const showAd = async () => {
+    
     if (!shouldShowAd()) {
       console.log("🚀 ~ file: App.tsx:109 ~ showAd ~ shouldShowAd:", shouldShowAd())
       return;
@@ -143,6 +144,7 @@ const App: React.FC = () => {
      
       /** Show ad only if the user is not premium */
       if (!isPremium) {
+        console.log("🚀 ~ file: App.tsx:147 ~ runQuery ~ isPremium:", isPremium)
         showAd();
       }
       

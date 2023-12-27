@@ -2,5 +2,5 @@
 <resources>
     <color name="alert_background">#ffffff</color>
     <color name="alert_text">#0f2438</color>
-    <color name="bootsplash_background">#FFD60A</color>
+    <color name="bootsplash_background">#708090</color>
 </resources>

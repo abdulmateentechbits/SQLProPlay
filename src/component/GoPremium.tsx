@@ -13,6 +13,7 @@ import {
   ActivityIndicator,
   SafeAreaView,
   ScrollView,
+  ToastAndroid,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,10 +24,15 @@ import RNIap, {
   purchaseUpdatedListener,
   finishTransaction,
   Product,
+  initConnection,
+  getProducts,
+  requestPurchase,
+  endConnection,
 } from 'react-native-iap';
 
 import {itemSkus, restorePremium, savePremium} from '../utils/utils';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { colors } from '../themes/colors';
 
 let purchaseUpdate: EmitterSubscription, purchaseError: EmitterSubscription;
 
@@ -45,25 +51,27 @@ const GoPremium: FC<Props> = ({
   setIsPremium,
   isPremium,
 }) => {
-  console.log("🚀 ~ file: GoPremium.tsx:48 ~ isPremium:", isPremium)
   const [purchaseProcessing, setPurchaseProcessing] = useState(false);
   const [localizedPrice, setlocalizedPrice] = useState('');
+  console.log("🚀 ~ file: GoPremium.tsx:53 ~ localizedPrice:", localizedPrice)
 
   const getItems = async (): Promise<void> => {
     try {
-      const result: boolean = await RNIap.initConnection();
+      const result: boolean = await initConnection();
+      console.log("🚀 ~ file: GoPremium.tsx:56 ~ getItems ~ result:", result)
       /** If there is no skus return here */
       if (!itemSkus) {
         return;
       }
-      const products: Product[] = await RNIap.getProducts(itemSkus);
-      setlocalizedPrice(products[0].localizedPrice);
+      const products: Product[] = await getProducts({skus:itemSkus});
+      console.log("🚀 ~ file: GoPremium.tsx:60 ~ getItems ~ products:", products)
+      setlocalizedPrice(products[0]?.localizedPrice || "200");
 
       purchaseUpdate = purchaseUpdatedListener(async purchase => {
         const receipt: string = purchase.transactionReceipt;
         if (receipt) {
           try {
-            await finishTransaction(purchase);
+            await finishTransaction({purchase:purchase,isConsumable:false});
             Alert.alert(
               'Purchase complete',
               'Thanks for purchasing, Now you can enjoy the premium benefits ',
@@ -73,20 +81,22 @@ const GoPremium: FC<Props> = ({
             setIsPremium(true);
             setPurchaseProcessing(false);
           } catch (ackErr) {
-            console.warn('ackErr', ackErr);
+            showToast(`Error while purchasing: ${ackErr?.message}`)
+            console.log('ackErr', ackErr);
           }
         }
       });
 
       purchaseError = purchaseErrorListener(error => {
-        console.log('purchaseErrorListener', error);
+        // console.log('purchaseErrorListener', error);
         setPurchaseProcessing(false);
         // Alert.alert('purchase error', JSON.stringify(error.message));
       });
       // const consumed = await RNIap.consumeAllItemsAndroid();
       // console.log('consumed all items?', consumed);
     } catch (err) {
-      console.log(err.code, err.message);
+      showToast(`Error: ${err?.message}`)
+      console.log(err);
       setPurchaseProcessing(false);
     }
   };
@@ -102,7 +112,7 @@ const GoPremium: FC<Props> = ({
         if (purchaseError) {
           purchaseError.remove();
         }
-        RNIap.endConnection();
+        endConnection();
       };
     };
 
@@ -110,15 +120,20 @@ const GoPremium: FC<Props> = ({
   }, []);
 
   const buyPremium = async (): Promise<void> => {
+    console.log("🚀 ~ file: GoPremium.tsx:115 ~ buyPremium ~ itemSkus:", itemSkus)
+    
+    if (!itemSkus) {
+      return;
+    }
     try {
-      if (!itemSkus) {
-        return;
-      }
+      
       setPurchaseProcessing(true);
-      await RNIap.requestPurchase(itemSkus[0]);
+      await requestPurchase({skus:itemSkus});
       console.log('Purchase success');
     } catch (err) {
-      console.log(err?.code, err?.message);
+      setPurchaseProcessing(false);
+      showToast(`Error: ${err?.message}`)
+      console.log(err);
     }
   };
 
@@ -142,6 +157,10 @@ const GoPremium: FC<Props> = ({
       console.log(error);
       Alert.alert('Failed to restore your purchase', error);
     }
+  };
+
+  const showToast = (message: string) => {
+    ToastAndroid.show(message, ToastAndroid.SHORT);
   };
   return (
     <Modal
@@ -204,7 +223,7 @@ const GoPremium: FC<Props> = ({
               {!purchaseProcessing ? (
                 <Text style={styles.buyBtnTxt}>
                   {isPremium
-                    ? 'Sweet! You have Premium'
+                    ? 'Nice! You have Premium'
                     : `Buy Now for ${localizedPrice}`}
                 </Text>
               ) : (
@@ -276,11 +295,12 @@ const styles = StyleSheet.create({
   buyBtnTxt: {
     fontSize: RFValue(20),
     textAlign: 'center',
-    backgroundColor: darkYellow,
+    backgroundColor: colors.primary,
     padding: 8,
     maxWidth: 350,
     width: width - 20,
     borderRadius: 5,
+    color:'#FFFFFF'
   },
   restoreBtn: {
     textAlign: 'center',
